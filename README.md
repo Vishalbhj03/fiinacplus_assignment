@@ -49,12 +49,15 @@ This ensures that the latest version of the application is always deployed witho
 
 ## Project Structure
 
-* Jenkinsfile → Contains pipeline definition (CI/CD logic)
-* Dockerfile → Used to build the application container
-* requirements.txt → Python dependencies
-* app.py → Flask application code
-* k8s/deployment.yaml → Kubernetes deployment configuration
-* k8s/service.yaml → Kubernetes service configuration
+│
+├── Jenkinsfile              # CI/CD pipeline (build, test, deploy)
+├── Dockerfile               # Container image definition
+├── requirements.txt         # Python dependencies
+├── app.py                   # Flask application
+│
+└── k8s/                     # Kubernetes manifests
+    ├── deployment.yaml      # Deployment configuration
+    └── service.yaml         # Service configuration
 
 ---
 
