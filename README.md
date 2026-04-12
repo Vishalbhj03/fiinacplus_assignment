@@ -1,10 +1,10 @@
 # CI/CD Pipeline for Flask Application using Git, Jenkins, Docker and Kubernetes
 
-## Overview
+##Overview
 
-This project demonstrates a complete CI/CD pipeline for a simple Flask-based application. The goal of this setup is to automate the process of building, packaging, and deploying the application whenever changes are pushed to the GitHub repository.
+This project demonstrates a fully automated CI/CD pipeline for a Flask-based application. The pipeline is designed to automatically build, test, package, and deploy the application whenever code is pushed to the GitHub repository.
 
-The pipeline is implemented using Jenkins and is triggered automatically through GitHub webhooks. The application is containerized using Docker and deployed to a Kubernetes cluster (Minikube).
+The solution ensures minimal manual intervention, faster delivery, and consistent deployments using modern DevOps practices.
 
 ---
 
