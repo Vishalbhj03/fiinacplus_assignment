@@ -6,11 +6,15 @@ pipeline {
         BUILD_TAG = "${BUILD_NUMBER}"
     }
 
+    triggers {
+        githubPush()
+    }
+
     stages {
 
         stage('Checkout') {
             steps {
-                echo "Pulling latest changes from GitHub..."
+                echo "Pulling latest code..."
                 checkout scm
             }
         }
@@ -25,9 +29,26 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                echo "Running container for testing..."
+                sh '''
+                    docker run -d -p 5000:5000 --name test-container $IMAGE_NAME:$BUILD_TAG
+                    sleep 5
+                    curl -f http://localhost:5000/health
+                '''
+            }
+            post {
+                always {
+                    echo "Cleaning test container..."
+                    sh 'docker rm -f test-container || true'
+                }
+            }
+        }
+
         stage('Push Image') {
             steps {
-                echo "Pushing image to DockerHub..."
+                echo "Pushing to DockerHub..."
                 withCredentials([usernamePassword(credentialsId: 'docker-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh '''
                         echo $PASS | docker login -u $USER --password-stdin
@@ -40,21 +61,34 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                echo "Updating deployment image..."
-                sh '''
-                    kubectl set image deployment/flask-app flask-container=$IMAGE_NAME:$BUILD_TAG
-                    kubectl rollout status deployment/flask-app
-                '''
+                echo "Deploying to Kubernetes..."
+
+                withKubeConfig([credentialsId: 'kubeconfig']) {
+                    sh '''
+                        kubectl apply -f k8s/deployment.yaml
+                        kubectl apply -f k8s/service.yaml
+
+                        kubectl set image deployment/flask-app flask-container=$IMAGE_NAME:$BUILD_TAG
+                        kubectl rollout status deployment/flask-app
+                    '''
+                }
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                echo "Cleaning unused Docker images..."
+                sh 'docker system prune -f'
             }
         }
     }
 
     post {
         success {
-            echo "Deployment successful. New version is live."
+            echo "Deployment successful"
         }
         failure {
-            echo "Build failed. Check logs."
+            echo "Pipeline failed"
         }
     }
 }
