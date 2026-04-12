@@ -50,6 +50,7 @@ This ensures that the latest version of the application is always deployed witho
 ## Project Structure
 
 
+fiinacplus_assignment/
 │
 ├── Jenkinsfile              # CI/CD pipeline (build, test, deploy)
 ├── Dockerfile               # Container image definition
