@@ -49,13 +49,12 @@ This ensures that the latest version of the application is always deployed witho
 
 ## Project Structure
 
-
-Jenkinsfile → Contains pipeline definition (CI/CD logic)
-Dockerfile → Used to build the application container
-requirements.txt → Python dependencies
-app.py → Flask application code
-k8s/deployment.yaml → Kubernetes deployment configuration
-k8s/service.yaml → Kubernetes service configuration
+* Jenkinsfile → Contains pipeline definition (CI/CD logic)
+* Dockerfile → Used to build the application container
+* requirements.txt → Python dependencies
+* app.py → Flask application code
+* k8s/deployment.yaml → Kubernetes deployment configuration
+* k8s/service.yaml → Kubernetes service configuration
 
 ---
 
@@ -197,6 +196,7 @@ Make sure Kubernetes cluster is running before triggering pipeline.
 ## Conclusion
 
 This project demonstrates a production-ready CI/CD pipeline implementing DevOps best practices such as automation, security, scalability, and reliability.
+
 
 
 
