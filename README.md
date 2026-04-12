@@ -56,6 +56,7 @@ requirements.txt → Python dependencies
 app.py → Flask application code
 k8s/deployment.yaml → Kubernetes deployment configuration
 k8s/service.yaml → Kubernetes service configuration
+
 ---
 
 ## Setup Instructions
