@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: flask-service
 spec:
-  type: NodePort   # Change to LoadBalancer in cloud
+  type: NodePort 
   selector:
     app: flask-app
   ports:
